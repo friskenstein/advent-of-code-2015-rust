@@ -5,31 +5,28 @@ fn main() {
 }
 
 fn algo(input: &str) -> i32 {
-    let mut floor = 0;
-    for i in 0..input.len() {
-        floor += match input.get(i..=i) {
-            Some("(") => 1,
-            Some(")") => -1,
-            Some(_) => 0,
-            None => 0,
-        };
-    }
-    floor
+    input.chars().fold(0, |floor, c| match c {
+        '(' => floor + 1,
+        ')' => floor - 1,
+        _ => floor,
+    })
 }
 
 fn basement(input: &str) -> i32 {
     let mut floor = 0;
-    for i in 0..input.len() {
-        floor += match input.get(i..=i) {
-            Some("(") => 1,
-            Some(")") => -1,
-            Some(_) => 0,
-            None => 0,
+
+    for (idx, c) in input.chars().enumerate() {
+        floor += match c {
+            '(' => 1,
+            ')' => -1,
+            _ => 0,
         };
+
         if floor == -1 {
-            return i as i32 + 1
+            return idx as i32 + 1;
         }
     }
+
     -1
 }
 
